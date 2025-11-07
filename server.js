@@ -13,6 +13,7 @@ const app = express();
 const httpServer = createServer(app);
 
 // Environment variables
+const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 4000;
 const CORS_ORIGINS = process.env.CORS_ORIGINS
   ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
@@ -21,6 +22,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 console.log('🔧 Configuration:');
 console.log(`   Environment: ${NODE_ENV}`);
+console.log(`   Host: ${HOST}`);
 console.log(`   Port: ${PORT}`);
 console.log(`   CORS Origins: ${CORS_ORIGINS.join(', ')}`);
 console.log('');
@@ -367,10 +369,10 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, HOST, () => {
   console.log('\n🚀 Socket.IO Server started');
-  console.log(`📡 Listening on http://localhost:${PORT}`);
-  console.log(`🔌 WebSocket endpoint: ws://localhost:${PORT}`);
+  console.log(`📡 Listening on http://${HOST}:${PORT}`);
+  console.log(`🔌 WebSocket endpoint: ws://${HOST}:${PORT}`);
   console.log(`💚 No Redis required! Using in-memory adapter\n`);
 });
 
